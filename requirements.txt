@@ -1,0 +1,9 @@
+# Basic Python environment
+numpy
+pandas
+matplotlib
+scikit-learn
+FastAPI
+uvicorn
+python-multipart 
+faster-whisper

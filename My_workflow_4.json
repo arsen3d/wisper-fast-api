@@ -1,0 +1,91 @@
+{
+  "name": "My workflow 4",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "e5d6b578-6a2e-4184-b2fc-4711cfd3a299",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://audio-samples.github.io/samples/mp3/blizzard_unconditional/sample-0.mp3",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        220,
+        0
+      ],
+      "id": "822a39ea-18a4-4e22-9d1b-872bbe0c07bd",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://127.0.0.1:8000/v1/audio/transcriptions",
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "={{ $input.item.binary.data.mimeType }}",
+        "body": "={{ $input.item.binary.data.data }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        440,
+        0
+      ],
+      "id": "21c4c69f-0851-463c-b25a-a592f97875b2",
+      "name": "HTTP Request whisper"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request whisper",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "d8855285-0285-49a5-ab78-ce1b791bf41b",
+  "meta": {
+    "instanceId": "c282fe44b2b866180a941267e1c087d0e5c5d4979ad707785e5e6a21353fd208"
+  },
+  "id": "bk3Q8WJtFeh07lk4",
+  "tags": []
+}
