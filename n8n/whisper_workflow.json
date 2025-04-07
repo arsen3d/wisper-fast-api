@@ -1,0 +1,95 @@
+{
+  "name": "My workflow 5",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "51852dd0-49ad-4add-af55-1044db2bb7b0",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://audio-samples.github.io/samples/mp3/blizzard_unconditional/sample-0.mp3",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        220,
+        0
+      ],
+      "id": "1191c49d-01b5-47c1-a8c3-1311f9ba0493",
+      "name": "Download MP3"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://127.0.0.1:8000/v1/audio/transcriptions",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "data"
+            },
+            {
+              "name": "text",
+              "value": "test"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        440,
+        0
+      ],
+      "id": "0dfae09a-5160-40ea-8f3f-4d1154b1c614",
+      "name": "Send to Whisper API"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Download MP3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download MP3": {
+      "main": [
+        [
+          {
+            "node": "Send to Whisper API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "346dfadb-0fe8-4cfc-9fd5-6dd468508bdc",
+  "meta": {
+    "instanceId": "c282fe44b2b866180a941267e1c087d0e5c5d4979ad707785e5e6a21353fd208"
+  },
+  "id": "r6dF3z28MVcHwEB8",
+  "tags": []
+}
